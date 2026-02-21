@@ -1,0 +1,15 @@
+{
+  "name": "kensar-print-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local print agent for SATO Easy Print",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "install:win": "scripts\\\\windows-install.bat",
+    "start:win": "scripts\\\\windows-run.bat"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
