@@ -24,7 +24,6 @@ function getConfigPath() {
 }
 
 app.use(express.json({ limit: "1mb" }));
-app.use("/ui", express.static(PUBLIC_DIR));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -251,6 +250,32 @@ app.get("/health", (_req, res) => {
 
 app.get("/", (_req, res) => {
   res.redirect("/ui/");
+});
+
+function sendUiFile(res, filename, contentType) {
+  try {
+    const filePath = path.join(PUBLIC_DIR, filename);
+    const fileContent = fs.readFileSync(filePath);
+    res.setHeader("Content-Type", contentType);
+    res.send(fileContent);
+  } catch (error) {
+    res.status(500).json({
+      error: "UI file error",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+}
+
+app.get(["/ui", "/ui/", "/ui/index.html"], (_req, res) => {
+  sendUiFile(res, "index.html", "text/html; charset=utf-8");
+});
+
+app.get("/ui/styles.css", (_req, res) => {
+  sendUiFile(res, "styles.css", "text/css; charset=utf-8");
+});
+
+app.get("/ui/app.js", (_req, res) => {
+  sendUiFile(res, "app.js", "application/javascript; charset=utf-8");
 });
 
 app.get("/config", (_req, res) => {

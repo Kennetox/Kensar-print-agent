@@ -80,3 +80,21 @@ El agente guarda configuracion en:
 - `scripts/windows-run.bat`: inicia el agente con defaults
 
 Puedes editar `PRINTER_URL` en `scripts/windows-run.bat`.
+
+## 7) Build automatico en GitHub Releases (Windows)
+
+Este repo incluye workflow:
+
+- `.github/workflows/release-windows.yml`
+
+Cuando publicas un tag `v*` (por ejemplo `v0.1.1`), GitHub Actions:
+
+1. compila `dist/KensarPrintAgent.exe` en runner Windows
+2. adjunta el `.exe` al release del tag
+
+Para dispararlo:
+
+```bash
+git tag v0.1.1
+git push origin v0.1.1
+```
